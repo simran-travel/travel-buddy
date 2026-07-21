@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import destinations from "../data/destinations";
 import Map from "../components/Map";
 import WeatherCard from "../components/WeatherCard";
+import TripCalculator from "../components/TripCalculator";
 
 function DestinationDetails() {
   const { slug } = useParams();
@@ -90,9 +91,16 @@ function DestinationDetails() {
   <p>Weather data unavailable.</p>
 )}
 
-      <Link to="/">
-        <button>⬅ Back to Home</button>
-      </Link>
+<hr />
+
+<TripCalculator />
+
+<hr />
+
+<Link to="/">
+  <button>⬅ Back to Home</button>
+</Link>
+
     </div>
   );
 }
