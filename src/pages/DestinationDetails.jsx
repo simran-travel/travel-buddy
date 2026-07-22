@@ -4,6 +4,7 @@ import destinations from "../data/destinations";
 import Map from "../components/Map";
 import WeatherCard from "../components/WeatherCard";
 import TripCalculator from "../components/TripCalculator";
+import itineraries from "../data/itineraries";
 
 function DestinationDetails() {
   const { slug } = useParams();
@@ -11,6 +12,7 @@ function DestinationDetails() {
   const destination = destinations.find(
     (place) => place.slug === slug
   );
+  const itinerary = itineraries[slug] || [];
 
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -91,6 +93,25 @@ function DestinationDetails() {
   <p>Weather data unavailable.</p>
 )}
 
+<h2>🗓️ Trip Itinerary</h2>
+
+{itinerary.length > 0 ? (
+  itinerary.map((day) => (
+    <div key={day.day} className="itinerary-card">
+      <h3>
+        Day {day.day}: {day.title}
+      </h3>
+
+      <ul>
+        {day.activities.map((activity, index) => (
+          <li key={index}>{activity}</li>
+        ))}
+      </ul>
+    </div>
+  ))
+) : (
+  <p>No itinerary available.</p>
+)}
 <hr />
 
 <TripCalculator />

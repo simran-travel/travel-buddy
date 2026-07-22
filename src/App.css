@@ -271,3 +271,30 @@
   color: #0077b6;
   margin-top: 20px;
 }
+.itinerary-card {
+  background: #ffffff;
+  border-left: 6px solid #4caf50;
+  border-radius: 12px;
+  padding: 18px;
+  margin: 18px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.itinerary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.itinerary-card h3 {
+  margin-bottom: 10px;
+  color: #2e7d32;
+}
+
+.itinerary-card ul {
+  padding-left: 20px;
+}
+
+.itinerary-card li {
+  margin-bottom: 8px;
+}
