@@ -21,7 +21,12 @@ function Navbar() {
           <Link to="/favorites">❤️ Favorites</Link>
         </li>
 
-        <li>My Trips</li>
+        <li>
+  <Link to="/my-trips">
+    🧳 My Trips
+  </Link>
+</li>
+
       </ul>
     </nav>
   );
