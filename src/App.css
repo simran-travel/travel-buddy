@@ -298,3 +298,15 @@
 .itinerary-card li {
   margin-bottom: 8px;
 }
+.favorite-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.2s ease;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.2);
+}
