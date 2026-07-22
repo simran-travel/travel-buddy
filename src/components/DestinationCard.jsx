@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 
 function DestinationCard(props) {
 
-  const [favorite, setFavorite] = useState(() => {
+console.log("Card slug:", props.slug);
+  
+const [favorite, setFavorite] = useState(() => {
     const favorites =
       JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -33,17 +35,20 @@ function DestinationCard(props) {
 
     return (
     <div className="card">
-        <img
-  src={props.image}
-  alt={props.name}
-  className="destination-image"
-/>
-<button
-  onClick={() => setFavorite(!favorite)}
-  className="favorite-btn"
->
-  {favorite ? "❤️" : "🤍"}
-</button>
+        <div className="image-container">
+  <img
+    src={props.image}
+    alt={props.name}
+    className="destination-image"
+  />
+
+  <button
+    onClick={() => setFavorite(!favorite)}
+    className="favorite-btn"
+  >
+    {favorite ? "❤️" : "🤍"}
+  </button>
+</div>
 
       <h2>{props.name}</h2>
       <p className="rating">

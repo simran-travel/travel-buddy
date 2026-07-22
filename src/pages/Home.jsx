@@ -13,7 +13,8 @@ function Home() {
   );
 
   return (
-  <div className="app">
+
+<>
     <Navbar />
     <Hero />
 
@@ -52,7 +53,7 @@ function Home() {
         )}
       </div>
     </section>
-  </div>
+  </>
 );
 }
 export default Home;

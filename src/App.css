@@ -15,8 +15,16 @@
   background: white;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  width: 320px;
+  min-height: 500px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+
+  transition: transform .3s ease, box-shadow .3s ease;
 }
 
 .card:hover {
@@ -48,16 +56,39 @@
   font-size: 14px;
 }
 .card h2 {
-  color: #0077b6;
+  color: #29b6f6;
+  margin-top: 18px;
+  margin-bottom: 10px;
 }
 
 .card p {
   font-size: 16px;
 }
 
-.card button {
-  margin-top: 15px;
+.card a button {
+  width: 85%;
+  padding: 12px;
+  margin: 18px auto;
+  display: block;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #0077b6;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.3s;
 }
+
+.card button:hover {
+  background: #005f8d;
+  transform: translateY(-2px);
+}
+
 .card h1 {
   font-size: 36px;
   margin: 0 0 10px 0;
@@ -128,13 +159,6 @@
   display: block;
 }
 
-.card {
-  overflow: hidden;
-}
-
-.card h2 {
-  margin-top: 10px;
-}
 .details-image {
   width: 100%;
   height: 350px;
@@ -142,6 +166,15 @@
   border-radius: 18px;
   margin-bottom: 25px;
 }
+
+.card {
+  overflow: hidden;
+}
+
+.card h2 {
+  margin-top: 10px;
+}
+
 .map-container {
   border-radius: 20px;
   overflow: hidden;
@@ -309,4 +342,154 @@
 
 .favorite-btn:hover {
   transform: scale(1.2);
+}
+/* Main App */
+.app {
+  min-height: 100vh;
+  background: white;
+  color: black;
+  transition: 0.3s;
+}
+
+/* Dark Theme */
+.dark {
+  background: #121212;
+  color: white;
+}
+
+/* Theme Button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 15px;
+  background: #333;
+  color: white;
+  z-index: 1000;
+}
+
+.dark .theme-toggle {
+  background: #ffd54f;
+  color: black;
+}
+.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark .card,
+.dark .details-page,
+.dark .weather-card,
+.dark .trip-calculator,
+.dark .itinerary-card,
+.dark .details {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.dark .card h2,
+.dark .details-page h1,
+.dark .details-page h2,
+.dark .title-section h1,
+.dark .trip-calculator h2,
+.dark .trip-calculator h3,
+.dark .itinerary-card h3 {
+  color: #4fc3f7;
+}
+
+.dark p,
+.dark strong,
+.dark label,
+.dark li,
+.dark small {
+  color: #f5f5f5;
+}
+
+.dark input {
+  background: #2b2b2b;
+  color: white;
+  border: 1px solid #555;
+}
+
+.dark button {
+  background: #1976d2;
+  color: white;
+}
+
+.dark button:hover {
+  background: #1565c0;
+}
+
+.dark hr {
+  border-color: #444;
+}
+/* Hero Section */
+.dark .container h1,
+.dark .container h2,
+.dark .container p {
+  color: white;
+}
+
+/* Popular Destinations Heading */
+.dark .destinations h1 {
+  color: white;
+}
+
+/* Navbar Title */
+.dark .navbar h2 {
+  color: white;
+}
+
+/* Search Box */
+.dark .search-box {
+  background: #2b2b2b;
+  color: white;
+  border: 1px solid #555;
+}
+
+.dark .search-box::placeholder {
+  color: #bbbbbb;
+}
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar li {
+  list-style: none;
+}
+.image-container {
+  position: relative;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 45px;
+  height: 45px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  font-size: 24px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.15);
 }
