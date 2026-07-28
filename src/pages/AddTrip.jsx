@@ -9,46 +9,71 @@ function AddTrip() {
   const editingIndex = location.state?.index;
 
   const [trip, setTrip] = useState(
-    editingTrip || {
-      destination: "",
-      startDate: "",
-      endDate: "",
-      travelers: 1,
-      budget: ""
-    }
-  );
+  
+editingTrip || {
+  destination: "",
+  startDate: "",
+  endDate: "",
+  travelers: 1,
+  budget: "",
+  photos: []
+});
 
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState(
+  editingTrip?.photos || []
+);
 
-  function handleChange(e) {
-    setTrip({
-      ...trip,
-      [e.target.name]: e.target.value
-    });
-  }
+function handleChange(e) {
+  const { name, value } = e.target;
+
+  setTrip({
+    ...trip,
+    [name]: value
+  });
+}
 
   function handlePhotoChange(e) {
-    const selectedFiles = Array.from(e.target.files);
+  const files = Array.from(e.target.files);
 
-    if (selectedFiles.length > 5) {
-      alert("You can upload a maximum of 5 photos.");
-      return;
-    }
+  const photoPromises = files.slice(0, 5).map((file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
 
-    setPhotos(selectedFiles);
-  }
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
 
+      reader.readAsDataURL(file);
+    });
+  });
+
+  Promise.all(photoPromises).then((images) => {
+  setPhotos(images);
+
+  setTrip({
+    ...trip,
+    photos: images
+  });
+});
+};
+
+  
   async function handleSubmit(e) {
     e.preventDefault();
 
     const existingTrips =
       JSON.parse(localStorage.getItem("myTrips")) || [];
 
-    if (editingTrip) {
-      existingTrips[editingIndex] = trip;
-    } else {
-      existingTrips.push(trip);
-    }
+    const tripWithPhotos = {
+  ...trip,
+  photos: trip.photos || photos
+};
+
+if (editingTrip) {
+  existingTrips[editingIndex] = tripWithPhotos;
+} else {
+  existingTrips.push(tripWithPhotos);
+}
 
     localStorage.setItem(
       "myTrips",
@@ -151,6 +176,17 @@ function AddTrip() {
           <p>
             {photos.length} photo(s) selected
           </p>
+          <div className="photo-preview">
+  {photos.map((photo, index) => (
+    <img
+      key={index}
+      src={photo}
+      alt="Trip"
+      width="100"
+    />
+  ))}
+</div>
+
         </div>
 
         <button type="submit">

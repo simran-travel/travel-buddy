@@ -89,7 +89,7 @@ function MyTrips() {
         </button>
       </Link>
     </div>
-    
+
       <h1>🧳 My Trips</h1>
 
       {trips.length === 0 ? (
@@ -122,6 +122,19 @@ function MyTrips() {
             <p>
               <strong>Budget:</strong> ₹{trip.budget}
             </p>
+
+{trip.photos && trip.photos.length > 0 && (
+  <div className="trip-photos">
+    {trip.photos.map((photo, index) => (
+      <img
+        key={index}
+        src={photo}
+        alt="Trip"
+        width="120"
+      />
+    ))}
+  </div>
+)}
 
             <button onClick={() => editTrip(index)}>
               ✏️ Edit Trip
