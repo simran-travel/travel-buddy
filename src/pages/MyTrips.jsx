@@ -1,90 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function AddTrip() {
+function MyTrips() {
+  const [trips, setTrips] = useState([]);
+const navigate = useNavigate();
 
-  const [trip, setTrip] = useState({
-    destination: "",
-    startDate: "",
-    endDate: "",
-    travelers: 1,
-    budget: ""
+  useEffect(() => {
+    const savedTrips =
+      JSON.parse(localStorage.getItem("myTrips")) || [];
+    setTrips(savedTrips);
+  }, []);
+
+  function editTrip(index) {
+  navigate("/add-trip", {
+    state: {
+      trip: trips[index],
+      index: index
+    }
   });
+}
 
+  function deleteTrip(indexToDelete) {
+  const updatedTrips = trips.filter(
+    (_, index) => index !== indexToDelete
+  );
+if (!window.confirm("Are you sure you want to delete this trip?")) {
+  return;
+}
 
-  function handleChange(e) {
-    setTrip({
-      ...trip,
-      [e.target.name]: e.target.value
-    });
-  }
+  setTrips(updatedTrips);
 
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    console.log(trip);
-    alert("Trip created successfully!");
-  }
-
+  localStorage.setItem(
+    "myTrips",
+    JSON.stringify(updatedTrips)
+  );
+}
 
   return (
-    <div className="add-trip">
+    <div className="my-trips">
+      <h1>🧳 My Trips</h1>
 
-      <h1>➕ Plan New Trip</h1>
+      {trips.length === 0 ? (
+        <p>No trips planned yet.</p>
+      ) : (
+        trips.map((trip, index) => (
+          <div key={index} className="trip-card">
+            <h2>{trip.destination}</h2>
 
-      <form onSubmit={handleSubmit}>
+            <p>
+              <strong>Start:</strong> {trip.startDate}
+            </p>
 
-        <input
-          type="text"
-          name="destination"
-          placeholder="Destination"
-          value={trip.destination}
-          onChange={handleChange}
-        />
+            <p>
+              <strong>End:</strong> {trip.endDate}
+            </p>
 
+            <p>
+              <strong>Travelers:</strong> {trip.travelers}
+            </p>
 
-        <input
-          type="date"
-          name="startDate"
-          value={trip.startDate}
-          onChange={handleChange}
-        />
+            <p>
+              <strong>Budget:</strong> ₹{trip.budget}
+            </p>
 
+<button
+  onClick={() => editTrip(index)}
+>
+  ✏️ Edit Trip
+</button>
 
-        <input
-          type="date"
-          name="endDate"
-          value={trip.endDate}
-          onChange={handleChange}
-        />
+            <button onClick={
+            () => deleteTrip(index)}>
+  🗑 Delete Trip
+</button>
 
-
-        <input
-          type="number"
-          name="travelers"
-          min="1"
-          value={trip.travelers}
-          onChange={handleChange}
-        />
-
-
-        <input
-          type="number"
-          name="budget"
-          placeholder="Budget ₹"
-          value={trip.budget}
-          onChange={handleChange}
-        />
-
-
-        <button type="submit">
-          💾 Save Trip
-        </button>
-
-      </form>
-
+          </div>
+        ))
+      )}
     </div>
   );
 }
 
-export default AddTrip;
+export default MyTrips;

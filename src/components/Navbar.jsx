@@ -27,6 +27,12 @@ function Navbar() {
   </Link>
 </li>
 
+<li>
+  <Link to="/add-trip">
+    ➕ Add Trip
+  </Link>
+</li>
+
       </ul>
     </nav>
   );
