@@ -493,3 +493,147 @@
 .favorite-btn:hover {
   transform: scale(1.15);
 }
+
+/* Trip Status Badges */
+
+.upcoming {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.ongoing {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.completed {
+  background-color: #e2e3e5;
+  color: #383d41;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+/* ===== Dark Mode Form Fix ===== */
+
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #2d2d2d;
+  color: white;
+  border: 1px solid #666;
+}
+
+.dark input::placeholder {
+  color: #cccccc;
+}
+
+.dark button {
+  border: none;
+}
+
+.dark input[type="date"] {
+  color: white;
+}
+
+.upcoming {
+  background: #ffd966;
+  color: #5c4300;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.ongoing {
+  background: #4caf50;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.completed {
+  background: #757575;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+/* ===== My Trips & Add Trip Dark Mode Fix ===== */
+
+.my-trips,
+.add-trip {
+  text-align: center;
+  padding: 30px;
+}
+
+.my-trips h1,
+.my-trips h2,
+.add-trip h1 {
+  color: #222;
+}
+
+.dark .my-trips h1,
+.dark .my-trips h2,
+.dark .add-trip h1 {
+  color: white;
+}
+
+.dark .my-trips p,
+.dark .add-trip p,
+.dark .my-trips strong,
+.dark .add-trip label {
+  color: white;
+}
+
+/* ---------- Page Navigation ---------- */
+
+.page-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+}
+
+.back-btn,
+.home-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.back-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.home-btn {
+  background: #2196f3;
+  color: white;
+}
+
+.back-btn:hover {
+  background: #5a6268;
+}
+
+.home-btn:hover {
+  background: #1976d2;
+}
+
+.dark .back-btn {
+  background: #555;
+}
+
+.dark .home-btn {
+  background: #1976d2;
+}

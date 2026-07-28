@@ -1,21 +1,24 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function AddTrip() {
-const location = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-const editingTrip = location.state?.trip;
-const editingIndex = location.state?.index;
+  const editingTrip = location.state?.trip;
+  const editingIndex = location.state?.index;
 
   const [trip, setTrip] = useState(
-  editingTrip || {
-    destination: "",
-    startDate: "",
-    endDate: "",
-    travelers: 1,
-    budget: ""
-  }
-);
+    editingTrip || {
+      destination: "",
+      startDate: "",
+      endDate: "",
+      travelers: 1,
+      budget: ""
+    }
+  );
+
+  const [photos, setPhotos] = useState([]);
 
   function handleChange(e) {
     setTrip({
@@ -24,44 +27,74 @@ const editingIndex = location.state?.index;
     });
   }
 
-function handleSubmit(e) {
-  e.preventDefault();
+  function handlePhotoChange(e) {
+    const selectedFiles = Array.from(e.target.files);
 
-  const existingTrips =
-    JSON.parse(localStorage.getItem("myTrips")) || [];
+    if (selectedFiles.length > 5) {
+      alert("You can upload a maximum of 5 photos.");
+      return;
+    }
 
-  if (editingTrip) {
-    // Update existing trip
-    existingTrips[editingIndex] = trip;
-  } else {
-    // Add new trip
-    existingTrips.push(trip);
+    setPhotos(selectedFiles);
   }
 
-  localStorage.setItem(
-    "myTrips",
-    JSON.stringify(existingTrips)
-  );
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-  alert(
-    editingTrip
-      ? "Trip updated successfully!"
-      : "Trip created successfully!"
-  );
+    const existingTrips =
+      JSON.parse(localStorage.getItem("myTrips")) || [];
 
-  setTrip({
-    destination: "",
-    startDate: "",
-    endDate: "",
-    travelers: 1,
-    budget: ""
-  });
-}
+    if (editingTrip) {
+      existingTrips[editingIndex] = trip;
+    } else {
+      existingTrips.push(trip);
+    }
+
+    localStorage.setItem(
+      "myTrips",
+      JSON.stringify(existingTrips)
+    );
+
+    alert(
+      editingTrip
+        ? "Trip updated successfully!"
+        : "Trip created successfully!"
+    );
+
+    setTrip({
+      destination: "",
+      startDate: "",
+      endDate: "",
+      travelers: 1,
+      budget: ""
+    });
+
+    setPhotos([]);
+  }
 
   return (
-    <div className="add-trip">
+  <div className="add-trip">
 
-      <h1>➕ Plan New Trip</h1>
+    <div className="page-navigation">
+      <button
+        className="back-btn"
+        onClick={() => navigate(-1)}
+      >
+        ← Back
+      </button>
+
+      <Link to="/">
+        <button className="home-btn">
+          🏠 Home
+        </button>
+      </Link>
+    </div>
+
+      <h1>
+        {editingTrip
+          ? "✏️ Edit Trip"
+          : "➕ Plan New Trip"}
+      </h1>
 
       <form onSubmit={handleSubmit}>
 
@@ -103,12 +136,30 @@ function handleSubmit(e) {
           onChange={handleChange}
         />
 
+        <div className="photo-upload">
+          <label>
+            📸 Trip Photos (Maximum 5)
+          </label>
+
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handlePhotoChange}
+          />
+
+          <p>
+            {photos.length} photo(s) selected
+          </p>
+        </div>
+
         <button type="submit">
-          💾 Save Trip
+          {editingTrip
+            ? "💾 Update Trip"
+            : "💾 Save Trip"}
         </button>
 
       </form>
-
     </div>
   );
 }
