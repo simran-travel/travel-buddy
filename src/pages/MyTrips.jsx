@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 function MyTrips() {
   const [trips, setTrips] = useState([]);
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,11 +78,22 @@ function MyTrips() {
     };
   }
 
-const filteredTrips = trips.filter((trip) =>
-  trip.destination
+const filteredTrips = trips.filter((trip) => {
+  const matchesSearch = trip.destination
     .toLowerCase()
-    .includes(search.toLowerCase())
-);
+    .includes(search.toLowerCase());
+
+  const status = getTripStatus(
+    trip.startDate,
+    trip.endDate
+  );
+
+  const matchesStatus =
+    statusFilter === "All" ||
+    status.className === statusFilter.toLowerCase();
+
+  return matchesSearch && matchesStatus;
+});
 
   return (
     <div className="my-trips">
@@ -113,6 +125,26 @@ const filteredTrips = trips.filter((trip) =>
   value={search}
   onChange={(e) => setSearch(e.target.value)}
 />
+
+<div className="trip-filters">
+
+  <button onClick={() => setStatusFilter("All")}>
+    All
+  </button>
+
+  <button onClick={() => setStatusFilter("Upcoming")}>
+    Upcoming
+  </button>
+
+  <button onClick={() => setStatusFilter("Ongoing")}>
+    Ongoing
+  </button>
+
+  <button onClick={() => setStatusFilter("Completed")}>
+    Completed
+  </button>
+
+</div>
 
       {trips.length === 0 ? (
         <p>No trips planned yet.</p>
