@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 function MyTrips() {
   const [trips, setTrips] = useState([]);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,6 +77,11 @@ function MyTrips() {
     };
   }
 
+const filteredTrips = trips.filter((trip) =>
+  trip.destination
+    .toLowerCase()
+    .includes(search.toLowerCase())
+);
 
   return (
     <div className="my-trips">
@@ -98,15 +104,21 @@ function MyTrips() {
 
       </div>
 
-
       <h1>🧳 My Trips</h1>
 
+<input
+  type="text"
+  placeholder="🔍 Search trips..."
+  className="trip-search"
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+/>
 
       {trips.length === 0 ? (
         <p>No trips planned yet.</p>
       ) : (
 
-        trips.map((trip, index) => (
+        filteredTrips.map((trip, index) => (
 
           <div key={index} className="trip-card">
 
