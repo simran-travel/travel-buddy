@@ -1,13 +1,19 @@
 import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
 
 function TripDashboard() {
 
   const { tripId } = useParams();
-
   const trips =
     JSON.parse(localStorage.getItem("myTrips")) || [];
+    const savedExpenses =
+  JSON.parse(localStorage.getItem(`expenses-${tripId}`)) || [];
 
   const trip = trips[tripId];
+  const [expenses, setExpenses] = useState(savedExpenses);
+  const [expenseName, setExpenseName] = useState("");
+const [expenseAmount, setExpenseAmount] = useState("");
+const [editingIndex, setEditingIndex] = useState(null);
 
   const today = new Date();
 
@@ -21,6 +27,85 @@ const daysUntilTrip = Math.ceil(
 const tripDuration = Math.ceil(
   (end - start) / (1000 * 60 * 60 * 24)
 );
+
+function addExpense() {
+  console.log("Add expense clicked");
+  if (!expenseName || !expenseAmount) {
+    alert("Please enter expense details");
+    return;
+  }
+
+  const newExpense = {
+    name: expenseName,
+    amount: Number(expenseAmount),
+  };
+
+  let updatedExpenses;
+
+if (editingIndex !== null) {
+  updatedExpenses = [...expenses];
+
+  updatedExpenses[editingIndex] = newExpense;
+
+  setEditingIndex(null);
+} else {
+  updatedExpenses = [
+    ...expenses,
+    newExpense,
+  ];
+}
+
+  setExpenses(updatedExpenses);
+
+  localStorage.setItem(
+    `expenses-${tripId}`,
+    JSON.stringify(updatedExpenses)
+  );
+
+  setExpenseName("");
+  setExpenseAmount("");
+  setEditingIndex(null);
+}
+function editExpense(index) {
+  const expense = expenses[index];
+
+  setExpenseName(expense.name);
+  setExpenseAmount(expense.amount);
+  setEditingIndex(index);
+}
+
+function deleteExpense(indexToDelete) {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this expense?"
+  );
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  const updatedExpenses = expenses.filter(
+    (_, index) => index !== indexToDelete
+  );
+
+  setExpenses(updatedExpenses);
+
+  localStorage.setItem(
+    `expenses-${tripId}`,
+    JSON.stringify(updatedExpenses)
+  );
+}
+
+const totalExpenses = expenses.reduce(
+  (total, expense) => total + expense.amount,
+  0
+);
+
+const remainingBudget = trip.budget - totalExpenses;
+
+const budgetUsed =
+  trip.budget > 0
+    ? ((totalExpenses / trip.budget) * 100).toFixed(1)
+    : 0;
 
   if (!trip) {
     return (
@@ -85,6 +170,76 @@ const tripDuration = Math.ceil(
   <p>₹{trip.budget}</p>
 </div>
 
+<h2>💸 Expenses</h2>
+
+<div className="expense-form">
+
+  <input
+  type="text"
+  placeholder="Expense name (Flight, Hotel...)"
+  value={expenseName || ""}
+  onChange={(e) => setExpenseName(e.target.value)}
+/>
+
+  <input
+  type="number"
+  placeholder="Amount"
+  value={expenseAmount || ""}
+  onChange={(e) => setExpenseAmount(e.target.value)}
+/>
+
+  <button onClick={addExpense}>
+  {editingIndex !== null
+    ? "💾 Update Expense"
+    : "➕ Add Expense"}
+</button>
+
+{expenses.length > 0 && (
+  <div className="expense-list">
+    <h3>📊 Expense Summary</h3>
+
+<p>💸 Total Expenses: ₹{totalExpenses}</p>
+
+<p>💰 Remaining Budget: ₹{remainingBudget}</p>
+
+<p>📈 Budget Used: {budgetUsed}%</p>
+<div className="budget-bar">
+  <div
+    className="budget-progress"
+    style={{ width: `${budgetUsed}%` }}
+  ></div>
+</div>
+
+<hr />
+
+    <h3>Saved Expenses</h3>
+
+    {expenses.map((expense, index) => (
+  <p key={index}>
+    {expense.name} - ₹{expense.amount}
+
+    <button
+  onClick={() => editExpense(index)}
+  style={{ marginLeft: "10px" }}
+>
+  ✏️
+</button>
+
+<button
+  onClick={() => deleteExpense(index)}
+  style={{ marginLeft: "5px" }}
+>
+  🗑️
+</button>
+
+  </p>
+))}
+
+  </div>
+)}
+
+</div>
+
         <h2>Quick Actions</h2>
 
         <Link to={`/packing/${tripId}`}>
@@ -99,6 +254,10 @@ const tripDuration = Math.ceil(
             📝 Notes
           </button>
         </Link>
+
+        <Link to={`/itinerary/${trip.id}`}>
+  <button>🗓️ Itinerary</button>
+</Link>
 
 <Link
   to={`/destination/${trip.destination.toLowerCase()}`}
