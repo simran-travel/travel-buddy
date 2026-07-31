@@ -20,13 +20,33 @@ const [editingIndex, setEditingIndex] = useState(null);
 const start = new Date(trip?.startDate);
 const end = new Date(trip?.endDate);
 
-const daysUntilTrip = Math.ceil(
-  (start - today) / (1000 * 60 * 60 * 24)
-);
+const oneDay = 1000 * 60 * 60 * 24;
 
-const tripDuration = Math.ceil(
-  (end - start) / (1000 * 60 * 60 * 24)
-);
+const daysUntilTrip = Math.ceil((start - today) / oneDay);
+
+const tripDuration = Math.ceil((end - start) / oneDay) + 1;
+
+// Trip Status
+let tripStatus = "🟢 Upcoming";
+
+if (today >= start && today <= end) {
+  tripStatus = "🟠 Ongoing";
+} else if (today > end) {
+  tripStatus = "🔴 Completed";
+}
+
+// Progress %
+let progress = 0;
+
+if (today >= start && today <= end) {
+  const daysPassed = Math.ceil((today - start) / oneDay);
+  progress = Math.min(
+    100,
+    Math.round((daysPassed / tripDuration) * 100)
+  );
+} else if (today > end) {
+  progress = 100;
+}
 
 function addExpense() {
   console.log("Add expense clicked");
@@ -148,10 +168,41 @@ const budgetUsed =
 
 <div className="dashboard-info-card">
   <h3>⏳ Countdown</h3>
+
   <p>
-    {daysUntilTrip > 0
+    {tripStatus === "🟢 Upcoming"
       ? `${daysUntilTrip} day(s) left`
-      : "Trip started 🎉"}
+      : tripStatus === "🟠 Ongoing"
+      ? "Trip in progress ✈️"
+      : "Trip completed 🎉"}
+  </p>
+
+  <h4 style={{ marginTop: "12px" }}>
+    {tripStatus}
+  </h4>
+
+  <div
+    style={{
+      width: "100%",
+      height: "10px",
+      background: "#ddd",
+      borderRadius: "20px",
+      overflow: "hidden",
+      marginTop: "10px",
+    }}
+  >
+    <div
+      style={{
+        width: `${progress}%`,
+        height: "100%",
+        background: "#4caf50",
+        transition: "0.5s",
+      }}
+    />
+  </div>
+
+  <p style={{ marginTop: "8px" }}>
+    {progress}% Completed
   </p>
 </div>
 
@@ -242,29 +293,24 @@ const budgetUsed =
 
         <h2>Quick Actions</h2>
 
-        <Link to={`/packing/${tripId}`}>
-          <button>
-            🎒 Packing List
-          </button>
-        </Link>
+<Link to={`/packing/${tripId}`}>
+  <button>🎒 Packing List</button>
+</Link>
 
+<Link to={`/notes/${tripId}`}>
+  <button>📝 Notes</button>
+</Link>
 
-        <Link to={`/notes/${tripId}`}>
-          <button>
-            📝 Notes
-          </button>
-        </Link>
-
-        <Link to={`/itinerary/${trip.id}`}>
+<Link to={`/itinerary/${tripId}`}>
   <button>🗓️ Itinerary</button>
 </Link>
 
-<Link
-  to={`/destination/${trip.destination.toLowerCase()}`}
->
-  <button>
-    🌤 Weather
-  </button>
+<Link to={`/documents/${tripId}`}>
+  <button>📄 Documents</button>
+</Link>
+
+<Link to={`/destination/${trip.destination.toLowerCase()}`}>
+  <button>🌤 Weather</button>
 </Link>
 
       </div>

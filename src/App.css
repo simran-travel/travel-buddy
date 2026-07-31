@@ -454,6 +454,47 @@
 .dark .search-box::placeholder {
   color: #bbbbbb;
 }
+
+.dark .dashboard-info-card {
+  background: #1f1f1f;
+  color: white;
+}
+
+.dark .dashboard-info-card h3,
+.dark .dashboard-info-card h4,
+.dark .dashboard-info-card p {
+  color: white;
+}
+
+.dark input,
+.dark textarea {
+  background: #2b2b2b;
+  color: white;
+  border: 1px solid #555;
+}
+
+.dark button {
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+.dark hr {
+  border-color: #444;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: white;
+}
+.dark a {
+  color: #66b3ff;
+}
+
 .navbar ul {
   list-style: none;
   padding: 0;

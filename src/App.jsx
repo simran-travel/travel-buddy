@@ -10,6 +10,7 @@ import PackingChecklist from "./pages/PackingChecklist";
 import TripNotes from "./pages/TripNotes";
 import TripDashboard from "./pages/TripDashboard";
 import ItineraryPlanner from "./pages/ItineraryPlanner";
+import Documents from "./pages/Documents";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -63,6 +64,21 @@ function App() {
 <Route
   path="/itinerary/:tripId"
   element={<ItineraryPlanner />}
+/>
+
+<Route
+  path="/itinerary/:tripId"
+  element={<ItineraryPlanner />}
+/>
+
+<Route
+  path="/documents/:tripId"
+  element={<Documents />}
+/>
+
+<Route
+  path="/trip-dashboard/:tripId"
+  element={<TripDashboard />}
 />
 
 <Route
