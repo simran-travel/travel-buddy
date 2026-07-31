@@ -11,6 +11,7 @@ import TripNotes from "./pages/TripNotes";
 import TripDashboard from "./pages/TripDashboard";
 import ItineraryPlanner from "./pages/ItineraryPlanner";
 import Documents from "./pages/Documents";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -47,6 +48,10 @@ function App() {
 <Route
   path="/my-trips"
   element={<MyTrips />}
+/>
+<Route
+  path="/wishlist"
+  element={<Wishlist />}
 />
 <Route
   path="/add-trip"

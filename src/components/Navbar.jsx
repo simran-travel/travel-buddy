@@ -9,31 +9,31 @@ function Navbar() {
       </div>
 
       <ul className="nav-links">
-        <li>
-          <Link to="/">Home</Link>
-        </li>
+  <li>
+    <Link to="/">Home</Link>
+  </li>
 
-        <li>
-          <Link to="/">Explore</Link>
-        </li>
+  <li>
+    <Link to="/">Explore</Link>
+  </li>
 
-        <li>
-          <Link to="/favorites">❤️ Favorites</Link>
-        </li>
+  <li>
+    <Link to="/wishlist">❤️ Wishlist</Link>
+  </li>
 
-        <li>
-  <Link to="/my-trips">
-    🧳 My Trips
-  </Link>
-</li>
+  <li>
+    <Link to="/favorites">❤️ Favorites</Link>
+  </li>
 
-<li>
-  <Link to="/add-trip">
-    ➕ Add Trip
-  </Link>
-</li>
+  <li>
+    <Link to="/my-trips">🧳 My Trips</Link>
+  </li>
 
-      </ul>
+  <li>
+    <Link to="/add-trip">➕ Add Trip</Link>
+  </li>
+</ul>
+
     </nav>
   );
 }
