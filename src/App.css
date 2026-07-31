@@ -825,3 +825,87 @@
   background: #4caf50;
   transition: width 0.3s ease;
 }
+
+/* ===== Dashboard Summary Cards ===== */
+
+.dashboard-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.summary-card h4 {
+  margin: 0;
+  color: #666;
+  font-size: 15px;
+}
+
+.summary-card h2 {
+  margin-top: 12px;
+  color: #0077b6;
+  font-size: 28px;
+}
+
+.dark .summary-card {
+  background: #1e1e1e;
+}
+
+.dark .summary-card h4,
+.dark .summary-card h2 {
+  color: white;
+}
+/* ===== Budget Status Badge ===== */
+
+.budget-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.budget-badge.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.budget-badge.warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.budget-badge.danger {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.dark .budget-badge.success {
+  background: #2e7d32;
+  color: white;
+}
+
+.dark .budget-badge.warning {
+  background: #ef6c00;
+  color: white;
+}
+
+.dark .budget-badge.danger {
+  background: #c62828;
+  color: white;
+}

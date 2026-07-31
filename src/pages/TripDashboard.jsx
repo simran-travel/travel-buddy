@@ -13,6 +13,7 @@ function TripDashboard() {
   const [expenses, setExpenses] = useState(savedExpenses);
   const [expenseName, setExpenseName] = useState("");
 const [expenseAmount, setExpenseAmount] = useState("");
+const [expenseCategory, setExpenseCategory] = useState("Transport");
 const [editingIndex, setEditingIndex] = useState(null);
 
   const today = new Date();
@@ -56,9 +57,10 @@ function addExpense() {
   }
 
   const newExpense = {
-    name: expenseName,
-    amount: Number(expenseAmount),
-  };
+  name: expenseName,
+  amount: Number(expenseAmount),
+  category: expenseCategory,
+};
 
   let updatedExpenses;
 
@@ -84,6 +86,7 @@ if (editingIndex !== null) {
 
   setExpenseName("");
   setExpenseAmount("");
+  setExpenseCategory("Transport");
   setEditingIndex(null);
 }
 function editExpense(index) {
@@ -127,6 +130,18 @@ const budgetUsed =
     ? ((totalExpenses / trip.budget) * 100).toFixed(1)
     : 0;
 
+    const groupedExpenses = expenses.reduce((groups, expense) => {
+  const category = expense.category || "Other";
+
+  if (!groups[category]) {
+    groups[category] = [];
+  }
+
+  groups[category].push(expense);
+
+  return groups;
+}, {});
+
   if (!trip) {
     return (
       <div className="page">
@@ -160,6 +175,46 @@ const budgetUsed =
 
 
       <div className="dashboard-card">
+        <div className="dashboard-summary">
+
+  <div className="summary-card">
+    <h4>💰 Budget</h4>
+    <h2>₹{trip.budget}</h2>
+  </div>
+
+  <div className="summary-card">
+    <h4>💸 Expenses</h4>
+    <h2>₹{totalExpenses}</h2>
+  </div>
+
+  <div className="summary-card">
+    <h4>💵 Remaining</h4>
+    <h2>₹{remainingBudget}</h2>
+  </div>
+
+  <div className="summary-card">
+  <h4>📈 Budget Status</h4>
+
+  <h2>{budgetUsed}%</h2>
+
+  <span
+    className={
+      totalExpenses > trip.budget
+        ? "budget-badge danger"
+        : totalExpenses > trip.budget * 0.8
+        ? "budget-badge warning"
+        : "budget-badge success"
+    }
+  >
+    {totalExpenses > trip.budget
+      ? "🔴 Over Budget"
+      : totalExpenses > trip.budget * 0.8
+      ? "🟠 Warning"
+      : "🟢 On Track"}
+  </span>
+</div>
+
+</div>
 
         <div className="dashboard-info-card">
   <h3>📅 Travel Dates</h3>
@@ -239,6 +294,18 @@ const budgetUsed =
   onChange={(e) => setExpenseAmount(e.target.value)}
 />
 
+<select
+  value={expenseCategory}
+  onChange={(e) => setExpenseCategory(e.target.value)}
+>
+  <option value="Transport">✈️ Transport</option>
+  <option value="Accommodation">🏨 Accommodation</option>
+  <option value="Food">🍽 Food</option>
+  <option value="Activities">🎟 Activities</option>
+  <option value="Shopping">🛍 Shopping</option>
+  <option value="Other">📄 Other</option>
+</select>
+
   <button onClick={addExpense}>
   {editingIndex !== null
     ? "💾 Update Expense"
@@ -254,36 +321,94 @@ const budgetUsed =
 <p>💰 Remaining Budget: ₹{remainingBudget}</p>
 
 <p>📈 Budget Used: {budgetUsed}%</p>
+
 <div className="budget-bar">
   <div
     className="budget-progress"
-    style={{ width: `${budgetUsed}%` }}
+    style={{
+      width: `${Math.min(budgetUsed, 100)}%`,
+      background:
+        totalExpenses > trip.budget
+          ? "#f44336"
+          : totalExpenses > trip.budget * 0.8
+          ? "#ff9800"
+          : "#4caf50",
+    }}
   ></div>
 </div>
+
+<p
+  style={{
+    fontWeight: "bold",
+    color:
+      totalExpenses > trip.budget
+        ? "#f44336"
+        : totalExpenses > trip.budget * 0.8
+        ? "#ff9800"
+        : "#4caf50",
+  }}
+>
+  {totalExpenses > trip.budget
+    ? `⚠️ Budget exceeded by ₹${totalExpenses - trip.budget}`
+    : `✅ ₹${remainingBudget} remaining`}
+</p>
 
 <hr />
 
     <h3>Saved Expenses</h3>
 
-    {expenses.map((expense, index) => (
-  <p key={index}>
-    {expense.name} - ₹{expense.amount}
+    {Object.entries(groupedExpenses).map(([category, items]) => (
+  <div key={category} style={{ marginBottom: "25px" }}>
 
-    <button
-  onClick={() => editExpense(index)}
-  style={{ marginLeft: "10px" }}
->
-  ✏️
-</button>
+    <h3
+      style={{
+        background: "#f5f5f5",
+        padding: "10px",
+        borderRadius: "8px",
+      }}
+    >
+      {category}
+    </h3>
 
-<button
-  onClick={() => deleteExpense(index)}
-  style={{ marginLeft: "5px" }}
->
-  🗑️
-</button>
+    {items.map((expense) => {
+      const originalIndex = expenses.findIndex(
+        (e) =>
+          e.name === expense.name &&
+          e.amount === expense.amount &&
+          (e.category || "Other") === (expense.category || "Other")
+      );
 
-  </p>
+      return (
+        <div
+          key={originalIndex}
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: "10px",
+            padding: "12px",
+            marginBottom: "10px",
+          }}
+        >
+          <p>
+            {expense.name} - ₹{expense.amount}
+          </p>
+
+          <button
+            onClick={() => editExpense(originalIndex)}
+            style={{ marginRight: "8px" }}
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            onClick={() => deleteExpense(originalIndex)}
+          >
+            🗑️ Delete
+          </button>
+        </div>
+      );
+    })}
+
+  </div>
 ))}
 
   </div>
