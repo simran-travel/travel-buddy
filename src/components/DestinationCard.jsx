@@ -57,9 +57,9 @@ const [favorite, setFavorite] = useState(() => {
 
       <p>{props.description}</p>
 
-      <strong className="budget">
-  {props.budget}
-</strong>
+      <p className="budget">
+  💰 {props.budget}
+</p>
 
       <Link to={`/destination/${props.slug}`}>
   <button>Explore</button>

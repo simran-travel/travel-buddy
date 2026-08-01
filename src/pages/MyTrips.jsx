@@ -189,79 +189,53 @@ const filteredTrips = trips.filter((trip) => {
 
             </div>
 
+<div className="trip-info">
+  <p>📅 <strong>Start:</strong> {trip.startDate}</p>
 
-            <p>
-              <strong>Start:</strong> {trip.startDate}
-            </p>
+  <p>🏁 <strong>End:</strong> {trip.endDate}</p>
 
+  <p>👥 <strong>Travelers:</strong> {trip.travelers}</p>
 
-            <p>
-              <strong>End:</strong> {trip.endDate}
-            </p>
-
-
-            <p>
-              <strong>Travelers:</strong> {trip.travelers}
-            </p>
-
-
-            <p>
-              <strong>Budget:</strong> ₹{trip.budget}
-            </p>
-
-
-
-            {trip.photos && trip.photos.length > 0 && (
-
-              <div className="trip-photos">
-
-                {trip.photos.map((photo, index) => (
-
-                  <img
-                    key={index}
-                    src={photo}
-                    alt="Trip"
-                    width="120"
-                  />
-
-                ))}
-
-              </div>
-
-            )}
-
-
+  <p>💰 <strong>Budget:</strong> ₹{trip.budget}</p>
+</div>        
 
             <div className="trip-actions">
 
 
               <Link to={`/trip-dashboard/${index}`}>
-                <button>
-                  🌍 Dashboard
-                </button>
+                <button className="dashboard-btn">
+  🌍 Dashboard
+</button>
+
               </Link>
 
 
               <Link to={`/packing/${index}`}>
-                <button>
-                  🎒 Packing
-                </button>
+                <button className="packing-btn">
+  🎒 Packing
+</button>
               </Link>
 
 
               <Link to={`/notes/${index}`}>
-                <button>
-                  📝 Notes
-                </button>
+                <button className="notes-btn">
+  📝 Notes
+</button>
               </Link>
 
 
-              <button onClick={() => editTrip(index)}>
+            <button
+  className="edit-btn"
+  onClick={() => editTrip(index)}
+>
                 ✏️ Edit
               </button>
 
 
-              <button onClick={() => deleteTrip(index)}>
+            <button
+  className="delete-btn"
+  onClick={() => deleteTrip(index)}
+>
                 🗑 Delete
               </button>
 

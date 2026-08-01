@@ -1,3 +1,31 @@
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+
+  --background: #f4f6fb;
+  --surface: #ffffff;
+
+  --text: #1f2937;
+  --text-light: #6b7280;
+
+  --radius: 14px;
+  --shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+
+  --transition: 0.25s ease;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
 .destinations {
   margin-top: 50px;
   text-align: center;
@@ -12,7 +40,7 @@
 }
 
 .card {
-  background: white;
+  background: var(--surface);
   border-radius: 18px;
   overflow: hidden;
 
@@ -22,9 +50,52 @@
   display: flex;
   flex-direction: column;
 
-  box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 
-  transition: transform .3s ease, box-shadow .3s ease;
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease;
+
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}/* ---------- Reusable Card ---------- */
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  transition: transform var(--transition),
+              box-shadow var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.12);
 }
 
 .card:hover {
@@ -427,10 +498,9 @@
 .dark hr {
   border-color: #444;
 }
-/* Hero Section */
-.dark .container h1,
-.dark .container h2,
-.dark .container p {
+.dark .hero-section h1,
+.dark .hero-section h2,
+.dark .hero-section p {
   color: white;
 }
 
@@ -504,31 +574,45 @@
 .navbar li {
   list-style: none;
 }
-.image-container {
-  position: relative;
+.destination-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+
+  transition: transform 0.5s ease;
+}
+
+.card:hover .destination-image {
+  transform: scale(1.05);
 }
 
 .favorite-btn {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 15px;
+  right: 15px;
 
-  width: 45px;
-  height: 45px;
+  width: 44px;
+  height: 44px;
 
-  border: none;
   border-radius: 50%;
 
   background: rgba(255, 255, 255, 0.9);
 
-  font-size: 24px;
-  cursor: pointer;
+  border: none;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  transition: 0.3s;
+  font-size: 22px;
+
+  transition: all 0.25s ease;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.15);
+  background: white;
 }
 
 .favorite-btn:hover {
@@ -694,10 +778,9 @@
 }
 .trip-cover {
   width: 100%;
-  height: 220px;
+  height: 260px;
   object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 15px;
+  display: block;
 }
 .progress-container {
   width: 100%;
@@ -732,7 +815,10 @@
   opacity: 0.6;
 }
 .dashboard-card {
-  margin-top: 20px;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .dashboard-info-card {
@@ -769,6 +855,44 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.trip-card h2 {
+  margin: 20px;
+  font-size: 2rem;
+}
+.trip-info {
+  padding: 0 20px 20px;
+}
+
+.trip-info p {
+  margin: 10px 0;
+  font-size: 1rem;
+}
+.trip-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  padding: 20px;
+}
+.dark .trip-card {
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.dark .trip-card h2,
+.dark .trip-card p,
+.dark .trip-card span {
+  color: #ffffff;
+}
+
+.dark .trip-info {
+  color: #ffffff;
+}
+
+.trip-actions button {
+  flex: 1;
+  min-width: 130px;
 }
 .trip-status {
   display: inline-block;
@@ -830,42 +954,81 @@
 
 .dashboard-summary {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 18px;
-  margin-bottom: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .summary-card {
   background: white;
-  border-radius: 16px;
-  padding: 18px;
+  border-radius: 18px;
+  padding: 24px;
   text-align: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: transform .25s ease, box-shadow .25s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #ececec;
 }
 
 .summary-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
 }
 
 .summary-card h4 {
-  margin: 0;
+  margin-bottom: 10px;
   color: #666;
-  font-size: 15px;
+  font-size: 0.95rem;
 }
 
 .summary-card h2 {
-  margin-top: 12px;
-  color: #0077b6;
-  font-size: 28px;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .dark .summary-card {
-  background: #1e1e1e;
+  background: #1f1f1f;
+  border-color: #333;
+  color: white;
 }
 
-.dark .summary-card h4,
+.dark .summary-card h4 {
+  color: #bbb;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  margin-top: 20px;
+}
+.quick-actions a {
+  text-decoration: none;
+}
+
+.quick-actions button {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+  color: #333;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.quick-actions button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}
+
+.dark .quick-actions button {
+  background: #1f1f1f;
+  color: white;
+}
+
 .dark .summary-card h2 {
   color: white;
 }
@@ -908,4 +1071,343 @@
 .dark .budget-badge.danger {
   background: #c62828;
   color: white;
+}
+/* ---------- Global Buttons ---------- */
+
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* ---------- Global Form Styles ---------- */
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  transition: border-color var(--transition),
+              box-shadow var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+label {
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+}
+/* ==========================================
+   HERO SECTION
+========================================== */
+
+.hero-section {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 70px 40px;
+  text-align: center;
+
+  background: linear-gradient(135deg, #eef4ff 0%, #ffffff 100%);
+
+  border-radius: 24px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.hero-section h1 {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.hero-section h2 {
+  font-size: 2rem;
+  color: #374151;
+  margin-bottom: 20px;
+}
+
+.hero-section p {
+  max-width: 700px;
+  margin: 0 auto 30px;
+  color: #6b7280;
+  font-size: 1.15rem;
+  line-height: 1.7;
+}
+
+.hero-section button {
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  border-radius: 12px;
+}
+/* ===== Hero Section Dark Mode ===== */
+
+.dark .hero-section {
+  background: linear-gradient(135deg, #1f2937, #111827);
+}
+
+.dark .hero-section h1,
+.dark .hero-section h2,
+.dark .hero-section p {
+  color: white;
+}
+.card h2 {
+  margin: 18px 20px 10px;
+  font-size: 1.5rem;
+}
+
+.rating {
+  margin: 0 20px;
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.card p {
+  margin: 12px 20px;
+  line-height: 1.6;
+  color: #6b7280;
+}
+
+.budget {
+  margin: auto 20px 20px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.card a {
+  margin: 0 20px 20px;
+}
+
+.card a button {
+  width: 100%;
+}
+/* ==========================================
+   MY TRIPS
+========================================== */
+
+.trip-card {
+  background: var(--surface);
+  border-radius: 18px;
+  overflow: hidden;
+
+  max-width: 900px;
+  margin: 30px auto;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+  transition: transform .3s ease,
+              box-shadow .3s ease;
+}
+
+.trip-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
+}
+/* ===== My Trips Action Buttons ===== */
+
+.dashboard-btn {
+  background: #2563eb;
+}
+
+.dashboard-btn:hover {
+  background: #1d4ed8;
+}
+
+.packing-btn {
+  background: #7c3aed;
+}
+
+.packing-btn:hover {
+  background: #6d28d9;
+}
+
+.notes-btn {
+  background: #0f766e;
+}
+
+.notes-btn:hover {
+  background: #0d5f59;
+}
+
+.edit-btn {
+  background: #ea580c;
+}
+
+.edit-btn:hover {
+  background: #c2410c;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+.trip-progress {
+  width: 100%;
+  height: 10px;
+
+  background: #ddd;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  margin-top: 12px;
+}
+
+.trip-progress-fill {
+  height: 100%;
+
+  background: #22c55e;
+
+  transition: width .4s ease;
+}
+
+.progress-text {
+  margin-top: 10px;
+
+  font-weight: 600;
+
+  color: var(--text-light);
+}
+/* ===== Dashboard Quick Actions ===== */
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.quick-actions a {
+  flex: 1;
+  min-width: 170px;
+}
+
+.quick-actions button {
+  width: 100%;
+}
+
+.itinerary-btn {
+  background: #0284c7;
+}
+
+.itinerary-btn:hover {
+  background: #0369a1;
+}
+
+.documents-btn {
+  background: #64748b;
+}
+
+.documents-btn:hover {
+  background: #475569;
+}
+
+.weather-btn {
+  background: #16a34a;
+}
+
+.weather-btn:hover {
+  background: #15803d;
+}
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+  margin-top: 60px;
+  padding: 45px 20px;
+
+  text-align: center;
+
+  background: var(--surface);
+
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.footer h2 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.footer-tagline {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.footer p {
+  margin: 8px 0;
+}
+
+.footer-copy {
+  margin-top: 20px;
+  opacity: .7;
+  font-size: 14px;
+}
+
+.dark .footer {
+  background: #121212;
+  color: #ffffff;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.dark .footer p {
+  color: #d0d0d0;
+}
+
+.dark .footer-copy {
+  color: #9e9e9e;
+}
+
+.dark .footer-tagline {
+  color: #ffffff;
+}
+.expense-category {
+  background: #f5f5f5;
+  color: #222;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.dark .expense-category {
+  background: #2b2b2b;
+  color: #ffffff;
 }

@@ -236,29 +236,18 @@ const budgetUsed =
     {tripStatus}
   </h4>
 
+  <div className="trip-progress">
   <div
+    className="trip-progress-fill"
     style={{
-      width: "100%",
-      height: "10px",
-      background: "#ddd",
-      borderRadius: "20px",
-      overflow: "hidden",
-      marginTop: "10px",
+      width: `${progress}%`,
     }}
-  >
-    <div
-      style={{
-        width: `${progress}%`,
-        height: "100%",
-        background: "#4caf50",
-        transition: "0.5s",
-      }}
-    />
-  </div>
+  />
+</div>
 
-  <p style={{ marginTop: "8px" }}>
-    {progress}% Completed
-  </p>
+<p className="progress-text">
+  {progress}% Completed
+</p>
 </div>
 
 <div className="dashboard-info-card">
@@ -360,15 +349,9 @@ const budgetUsed =
     {Object.entries(groupedExpenses).map(([category, items]) => (
   <div key={category} style={{ marginBottom: "25px" }}>
 
-    <h3
-      style={{
-        background: "#f5f5f5",
-        padding: "10px",
-        borderRadius: "8px",
-      }}
-    >
-      {category}
-    </h3>
+    <h3 className="expense-category">
+  {category}
+</h3>
 
     {items.map((expense) => {
       const originalIndex = expenses.findIndex(
@@ -418,25 +401,29 @@ const budgetUsed =
 
         <h2>Quick Actions</h2>
 
-<Link to={`/packing/${tripId}`}>
-  <button>🎒 Packing List</button>
-</Link>
+<div className="quick-actions">
 
-<Link to={`/notes/${tripId}`}>
-  <button>📝 Notes</button>
-</Link>
+  <Link to={`/packing/${tripId}`}>
+    <button className="packing-btn">🎒 Packing</button>
+  </Link>
 
-<Link to={`/itinerary/${tripId}`}>
-  <button>🗓️ Itinerary</button>
-</Link>
+  <Link to={`/notes/${tripId}`}>
+    <button className="notes-btn">📝 Notes</button>
+  </Link>
 
-<Link to={`/documents/${tripId}`}>
-  <button>📄 Documents</button>
-</Link>
+  <Link to={`/itinerary/${tripId}`}>
+    <button className="itinerary-btn">🗓️ Itinerary</button>
+  </Link>
 
-<Link to={`/destination/${trip.destination.toLowerCase()}`}>
-  <button>🌤 Weather</button>
-</Link>
+  <Link to={`/documents/${tripId}`}>
+    <button className="documents-btn">📄 Documents</button>
+  </Link>
+
+  <Link to={`/destination/${trip.destination.toLowerCase()}`}>
+    <button className="weather-btn">🌤 Weather</button>
+  </Link>
+
+</div>
 
       </div>
 

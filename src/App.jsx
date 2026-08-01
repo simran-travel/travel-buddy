@@ -13,6 +13,9 @@ import ItineraryPlanner from "./pages/ItineraryPlanner";
 import Documents from "./pages/Documents";
 import Wishlist from "./pages/Wishlist";
 
+import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./components/Footer";
+
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -34,64 +37,65 @@ function App() {
         {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
       </button>
 
+      <ScrollToTop />
+
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route
           path="/destination/:slug"
           element={<DestinationDetails />}
         />
 
         <Route
-  path="/favorites"
-  element={<Favorites />}
-/>
-<Route
-  path="/my-trips"
-  element={<MyTrips />}
-/>
-<Route
-  path="/wishlist"
-  element={<Wishlist />}
-/>
-<Route
-  path="/add-trip"
-  element={<AddTrip />}
-/>
-<Route
-  path="/packing/:tripId"
-  element={<PackingChecklist />}
-/>
-<Route
-  path="/notes/:tripId"
-  element={<TripNotes />}
-/>
+          path="/favorites"
+          element={<Favorites />}
+        />
 
-<Route
-  path="/itinerary/:tripId"
-  element={<ItineraryPlanner />}
-/>
+        <Route
+          path="/wishlist"
+          element={<Wishlist />}
+        />
 
-<Route
-  path="/itinerary/:tripId"
-  element={<ItineraryPlanner />}
-/>
+        <Route
+          path="/my-trips"
+          element={<MyTrips />}
+        />
 
-<Route
-  path="/documents/:tripId"
-  element={<Documents />}
-/>
+        <Route
+          path="/add-trip"
+          element={<AddTrip />}
+        />
 
-<Route
-  path="/trip-dashboard/:tripId"
-  element={<TripDashboard />}
-/>
+        <Route
+          path="/packing/:tripId"
+          element={<PackingChecklist />}
+        />
 
-<Route
-  path="/trip-dashboard/:tripId"
-  element={<TripDashboard />}
-/>
+        <Route
+          path="/notes/:tripId"
+          element={<TripNotes />}
+        />
+
+        <Route
+          path="/itinerary/:tripId"
+          element={<ItineraryPlanner />}
+        />
+
+        <Route
+          path="/documents/:tripId"
+          element={<Documents />}
+        />
+
+        <Route
+          path="/trip-dashboard/:tripId"
+          element={<TripDashboard />}
+        />
       </Routes>
+
+      <Footer />
     </div>
   );
 }
+
 export default App;
