@@ -1145,9 +1145,10 @@ label {
 }
 
 .hero-section h1 {
-  font-size: 4rem;
+  font-size: clamp(2.2rem, 7vw, 4rem);
   margin-bottom: 15px;
   font-weight: 700;
+  line-height: 1.15;
 }
 
 .hero-section h2 {
@@ -1410,4 +1411,23 @@ label {
 .dark .expense-category {
   background: #2b2b2b;
   color: #ffffff;
+}
+@media (max-width: 768px) {
+  .hero-section {
+    margin: 20px;
+    padding: 50px 24px;
+  }
+
+  .hero-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .hero-section button {
+    width: 100%;
+    max-width: 320px;
+  }
 }
