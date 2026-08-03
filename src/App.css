@@ -438,9 +438,20 @@ a {
   border-radius: 25px;
   cursor: pointer;
   font-size: 15px;
+  font-weight: 600;
   background: #333;
   color: white;
   z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 20px;
+  }
 }
 
 .dark .theme-toggle {
@@ -1430,4 +1441,39 @@ label {
     width: 100%;
     max-width: 320px;
   }
+}
+@media (max-width: 768px) {
+  .hero-section {
+    width: auto;
+    max-width: 100%;
+    margin: 20px 16px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+
+  .hero-section h1 {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    line-height: 1.2;
+  }
+
+  .hero-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .hero-section button {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+.destinations h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.destinations input {
+  font-size: 1rem;
 }
