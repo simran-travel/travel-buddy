@@ -12,14 +12,30 @@ import TripDashboard from "./pages/TripDashboard";
 import ItineraryPlanner from "./pages/ItineraryPlanner";
 import Documents from "./pages/Documents";
 import Wishlist from "./pages/Wishlist";
-
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./components/Footer";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 
-function App() {
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
+  function App() {
+    
+  const [user, setUser] = useState(null);
+    const [darkMode, setDarkMode] = useState(() => {
+      return localStorage.getItem("theme") === "dark";
+    });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+      setUser(user);
+    } else {
+      setUser(null);
+    }
   });
+
+  return () => unsubscribe();
+}, []);
 
   useEffect(() => {
     localStorage.setItem(
@@ -27,6 +43,18 @@ function App() {
       darkMode ? "dark" : "light"
     );
   }, [darkMode]);
+
+  useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      
+    } else {
+      console.log("No user logged in");
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
@@ -41,7 +69,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-
+<Route path="/signup" element={<SignUp />} />
+<Route path="/login" element={<Login />} />
         <Route
           path="/destination/:slug"
           element={<DestinationDetails />}
@@ -98,4 +127,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

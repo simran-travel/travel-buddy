@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function DestinationCard(props) {
-
-console.log("Card slug:", props.slug);
   
 const [favorite, setFavorite] = useState(() => {
     const favorites =
