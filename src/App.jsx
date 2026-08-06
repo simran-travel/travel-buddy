@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-
 import Home from "./pages/Home";
 import DestinationDetails from "./pages/DestinationDetails";
 import Favorites from "./pages/Favorites";
@@ -18,6 +17,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
+import ProtectedRoute from "./components/ProtectedRoute";
 
   function App() {
     
@@ -71,55 +71,87 @@ import { auth } from "./firebase";
         <Route path="/" element={<Home />} />
 <Route path="/signup" element={<SignUp />} />
 <Route path="/login" element={<Login />} />
+       
         <Route
-          path="/destination/:slug"
-          element={<DestinationDetails />}
-        />
+  path="/favorites"
+  element={
+    <ProtectedRoute>
+      <Favorites />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/favorites"
-          element={<Favorites />}
-        />
+<Route
+  path="/wishlist"
+  element={
+    <ProtectedRoute>
+      <Wishlist />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/wishlist"
-          element={<Wishlist />}
-        />
+<Route
+  path="/my-trips"
+  element={
+    <ProtectedRoute>
+      <MyTrips />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/my-trips"
-          element={<MyTrips />}
-        />
+<Route
+  path="/add-trip"
+  element={
+    <ProtectedRoute>
+      <AddTrip />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/add-trip"
-          element={<AddTrip />}
-        />
+<Route
+  path="/packing/:tripId"
+  element={
+    <ProtectedRoute>
+      <PackingChecklist />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/packing/:tripId"
-          element={<PackingChecklist />}
-        />
+<Route
+  path="/notes/:tripId"
+  element={
+    <ProtectedRoute>
+      <TripNotes />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/notes/:tripId"
-          element={<TripNotes />}
-        />
+<Route
+  path="/itinerary/:tripId"
+  element={
+    <ProtectedRoute>
+      <ItineraryPlanner />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/itinerary/:tripId"
-          element={<ItineraryPlanner />}
-        />
+<Route
+  path="/documents/:tripId"
+  element={
+    <ProtectedRoute>
+      <Documents />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/documents/:tripId"
-          element={<Documents />}
-        />
-
-        <Route
-          path="/trip-dashboard/:tripId"
-          element={<TripDashboard />}
-        />
+<Route
+  path="/trip-dashboard/:tripId"
+  element={
+    <ProtectedRoute>
+      <TripDashboard />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
 
       <Footer />

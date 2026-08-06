@@ -1,9 +1,30 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Navbar.css";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
+
+  return () => unsubscribe();
+}, []);
+
+  const handleLogout = async () => {
+  try {
+    await signOut(auth);
+    navigate("/login");
+  } catch (error) {
+    console.error(error);
+  }
+};
   return (
     <nav className="navbar">
       <div className="logo">
@@ -47,6 +68,33 @@ function Navbar() {
     ➕ Add Trip
   </NavLink>
 </li>
+
+{!user && (
+  <>
+    <li>
+      <NavLink to="/login" onClick={() => setMenuOpen(false)}>
+        🔑 Login
+      </NavLink>
+    </li>
+
+    <li>
+      <NavLink to="/signup" onClick={() => setMenuOpen(false)}>
+        📝 Sign Up
+      </NavLink>
+    </li>
+  </>
+)}
+
+{user && (
+  <li>
+    <button
+      className="logout-btn"
+      onClick={handleLogout}
+    >
+      🚪 Logout
+    </button>
+  </li>
+)}
 
       </ul>
     </nav>
