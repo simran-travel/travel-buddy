@@ -1,7 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
+
   apiKey: "AIzaSyA9d9McCFfbvg-Yc9qmMAzXztBigUe97Rg",
   authDomain: "travel-buddy-4d5a7.firebaseapp.com",
   projectId: "travel-buddy-4d5a7",
@@ -13,5 +15,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-
+export const db = getFirestore(app);
 export default app;

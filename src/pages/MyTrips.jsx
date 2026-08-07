@@ -1,4 +1,11 @@
 import { useEffect, useState } from "react";
+import { db } from "../firebase";
+import {
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
 function MyTrips() {
@@ -8,11 +15,19 @@ function MyTrips() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedTrips =
-      JSON.parse(localStorage.getItem("myTrips")) || [];
+  async function loadTrips() {
+    const snapshot = await getDocs(collection(db, "trips"));
 
-    setTrips(savedTrips);
-  }, []);
+    const tripsData = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    setTrips(tripsData);
+  }
+
+  loadTrips();
+}, []);
 
   function editTrip(index) {
     navigate("/add-trip", {
@@ -23,10 +38,15 @@ function MyTrips() {
     });
   }
 
-  function deleteTrip(indexToDelete) {
-    if (!window.confirm("Are you sure you want to delete this trip?")) {
-      return;
-    }
+  async function deleteTrip(indexToDelete) {
+  if (!window.confirm("Are you sure you want to delete this trip?")) {
+    return;
+  }
+
+  try {
+    const tripToDelete = trips[indexToDelete];
+
+    await deleteDoc(doc(db, "trips", tripToDelete.id));
 
     const updatedTrips = trips.filter(
       (_, index) => index !== indexToDelete
@@ -34,11 +54,12 @@ function MyTrips() {
 
     setTrips(updatedTrips);
 
-    localStorage.setItem(
-      "myTrips",
-      JSON.stringify(updatedTrips)
-    );
+    alert("Trip deleted successfully!");
+  } catch (error) {
+    console.error("Delete Error:", error);
+    alert(error.message);
   }
+}
 
 
   function getTripStatus(startDate, endDate) {
